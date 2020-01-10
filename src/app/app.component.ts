@@ -12,7 +12,8 @@ export class AppComponent implements OnInit {
   FilesBrd = [];
   RanksBrd = [];
   public board;
-  turn = true;
+  turn = false;
+  moveValid = false;
 
   itemSelected = false;
   selectedItem;
@@ -36,26 +37,61 @@ export class AppComponent implements OnInit {
 
     board.parseFen(vars.START_FEN);
     this.board = board.printBoard();
-    console.log(this.board);
   }
 
   resetBoard() {
     board.parseFen(vars.START_FEN);
     this.board = board.printBoard();
+    console.log(this.board);
   }
 
   selectPiece(item) {
     if (item.piece !== ' ' && !this.itemSelected) {
       if (!!item.player === this.turn) {
-        console.log(item);
         this.selectedItem = item;
         this.itemSelected = true;
+        console.log(item);
       }
     } else if (this.itemSelected && item.piece === ' ') {
-      item.piece = this.selectedItem.piece;
-      this.selectedItem.piece = ' ';
-      this.turn = !this.turn;
-      this.itemSelected = false;
+      if (this.calculateMoveIsValid(item, this.selectedItem)) {
+        item.piece = this.selectedItem.piece;
+        this.selectedItem.piece = ' ';
+        this.turn = !this.turn;
+        this.itemSelected = false;
+        this.selectedItem = undefined;
+        console.log(item);
+        this.moveValid = false;
+      } else {
+        this.selectedItem = undefined;
+        this.itemSelected = false;
+      }
+    }
+  }
+
+  calculateMoveIsValid(item, selectedItem): boolean {
+    console.log('calcing');
+    console.log(item);
+    switch (selectedItem.piece) {
+      case 'p':
+        if (item.pos - 11 === this.selectedItem.pos) {
+          return true;
+        } else {
+          return false;
+        }
+
+      case 'P':
+        if (item.pos + 11 === this.selectedItem.pos) {
+          return true;
+        } else {
+          return false;
+        }
+
+      case 'l':
+        // Éppen ide írtam volna a validáló fgvt.
+        return true;
+
+      default:
+        return true;
     }
   }
 }

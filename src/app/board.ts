@@ -3,11 +3,6 @@ import * as vars from './vars';
 export const GameBoard = {
   pieces: new Array(vars.BOARD_SQS),
   side: vars.COLOURS.BOTTOM,
-
-  material: new Array(2),
-  pceNum: new Array(13),
-  pList: new Array(14 * 10),
-  posKey: 0
 };
 
 export function resetBoard() {
@@ -37,17 +32,21 @@ export function printBoard() {
       piece = GameBoard.pieces[sq];
       const pieceChar = vars.PceChar[piece];
       let player: number;
-      if ( pieceChar !== ' ' && pieceChar.toLowerCase() === pieceChar ) {
-        player = 0;
+      if (pieceChar !== ' ') {
+        if (pieceChar.toLowerCase() === pieceChar) {
+          player = 0;
+        } else {
+          player = 1;
+        }
       } else {
-        player = 1;
+        player = undefined;
       }
       split.push({
         pos: sq,
         piece: pieceChar,
         player
       });
-      line += (vars.PceChar[piece]);
+      line += vars.PceChar[piece];
     }
 
     board.push(split);
