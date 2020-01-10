@@ -1,0 +1,39 @@
+.title  {
+  display: flex;
+  justify-content: center;
+  margin: 30px auto;
+}
+
+.board {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  width: 720px;
+  height: 720px;
+  border: 2px solid red;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+
+  .tile {
+    width: 80px;
+    box-sizing: border-box;
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid black;
+
+    img {
+      width: 60px;
+      height: 60px;
+    }
+  }
+}
+
+.switch {
+  transform: rotate(180deg);
+}
